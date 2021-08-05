@@ -1,5 +1,6 @@
 package it.polito.tdp.metroparis.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +10,9 @@ import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
+import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.traverse.GraphIterator;
 
 import it.polito.tdp.metroparis.db.MetroDAO;
 
@@ -61,13 +65,52 @@ public class Model {
 		}
 		
 		System.out.println(this.graph);
-		System.out.format("Grafo caricato con %d vertici %d archi",
+		System.out.format("Grafo caricato con %d vertici %d archi\n",
 				this.graph.vertexSet().size(),
 				this.graph.edgeSet().size());
 	}
 	
+	
+	/**
+	 * Visita il grafo con la strategia Breadth First
+	 * e ritorna l'insieme di vertici incontrati.
+	 * @param source vertice di partenza
+	 * @return {@link List} di {@link Fermata}
+	 */
+	public List<Fermata> visitaAmpiezza(Fermata source) {
+		List<Fermata> visita = new ArrayList<Fermata>();
+		GraphIterator<Fermata, DefaultEdge> bfv = new BreadthFirstIterator<>(this.graph, source);
+		
+		while(bfv.hasNext()) {
+			visita.add(bfv.next());
+		}
+		
+		return visita;
+	}
+	
+	
+	/**
+	 * Visita il grafo con la strategia Depth First
+	 * e ritorna l'insieme di vertici incontrati.
+	 * @param source vertice di partenza
+	 * @return {@link List} di {@link Fermata}
+	 */
+	public List<Fermata> visitaProfondita(Fermata source) {
+		List<Fermata> visita = new ArrayList<Fermata>();
+		GraphIterator<Fermata, DefaultEdge> dfv = new DepthFirstIterator<>(this.graph, source);
+		
+		while(dfv.hasNext()) {
+			visita.add(dfv.next());
+		}
+		
+		return visita;
+	}
+	
 	public static void main(String args[]) {
 		Model m = new Model();
-		
+		List<Fermata> visita1 = m.visitaAmpiezza(m.fermate.get(0));
+		System.out.println(visita1);
+		List<Fermata> visita2 = m.visitaProfondita(m.fermate.get(0));
+		System.out.println(visita2);
 	}
 }
