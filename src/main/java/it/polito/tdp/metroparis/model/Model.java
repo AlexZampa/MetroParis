@@ -78,7 +78,7 @@ public class Model {
 	/**
 	 * Visita il grafo con la strategia Breadth First
 	 * e ritorna l'insieme di vertici incontrati.
-	 * @param source vertice di partenza
+	 * @param source {@link Fermata} di partenza
 	 * @return {@link List} di {@link Fermata}
 	 */
 	public List<Fermata> visitaAmpiezza(Fermata source) {
@@ -96,7 +96,7 @@ public class Model {
 	/**
 	 * Visita il grafo con la strategia Depth First
 	 * e ritorna l'insieme di vertici incontrati.
-	 * @param source vertice di partenza
+	 * @param source {@link Fermata} di partenza
 	 * @return {@link List} di {@link Fermata}
 	 */
 	public List<Fermata> visitaProfondita(Fermata source) {
@@ -111,6 +111,11 @@ public class Model {
 	}
 	
 	
+	/**
+	 * Crea albero visita
+	 * @param source {@link Fermata} di partenza
+	 * @return {@link Map} <{@link Fermata},{@link Fermata}>
+	 */
 	public Map<Fermata, Fermata> alberoVisita(Fermata source) {
 		Map<Fermata,Fermata> albero = new HashMap<>();
 		albero.put(source, null);
